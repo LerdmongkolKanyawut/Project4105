@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>รายละเอียดวิชา</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_courses.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="title-bar">รายละเอียดวิชา</div>
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn active" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <!-- ข้อมูลวิชา render โดย JS หลัง AJAX โหลดเสร็จ -->
+            <div class="accordion" id="accordion">
+                <div class="loading-msg" id="loading-msg">กำลังโหลดข้อมูลวิชา...</div>
+            </div>
+        </div>
+
+        <script src="js/js_courses.js"></script>
+    </body>
+</html>

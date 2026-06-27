@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>ติดต่อ</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_contact.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="title-bar">ติดต่อ</div>
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn active" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <div class="content">
+                <div class="section-title">จัดทำโดย</div>
+                <div class="contact-name">Firstname Lastname</div>
+                <div class="spacer"></div>
+                <button class="btn-report" onclick="openModal()">แจ้งปัญหา</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="modal" onclick="closeOutside(event)">
+            <div class="modal-box">
+                <button class="modal-close" onclick="closeModal()">&#10005;</button>
+                <h2>แจ้งปัญหา</h2>
+                <div class="modal-field">
+                    <label>หัวข้อปัญหา <span style="color:#c00">*</span></label>
+                    <input type="text" id="rpt-subject" placeholder="ระบุหัวข้อ"/>
+                </div>
+                <div class="modal-field">
+                    <label>รายละเอียด <span style="color:#c00">*</span></label>
+                    <textarea id="rpt-detail" placeholder="อธิบายปัญหาที่พบ..."></textarea>
+                </div>
+                <div class="modal-field">
+                    <label>ชื่อผู้แจ้ง</label>
+                    <input type="text" id="rpt-name" placeholder="ชื่อ-นามสกุล (ไม่บังคับ)"/>
+                </div>
+                <div class="modal-field">
+                    <label>อีเมล</label>
+                    <input type="email" id="rpt-email" placeholder="email@example.com (ไม่บังคับ)"/>
+                </div>
+                <div class="msg" id="rpt-msg"></div>
+                <div class="modal-footer">
+                    <button class="btn" onclick="closeModal()">ยกเลิก</button>
+                    <button class="btn primary" id="btn-send" onclick="submitReport()">ส่งรายงาน</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/js_contact.js"></script>
+    </body>
+</html>

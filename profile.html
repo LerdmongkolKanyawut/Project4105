@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>โปรไฟล์</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_profile.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="title-bar">โปรไฟล์</div>
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn active" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-top">
+                    <div class="avatar-wrap">
+                        <div class="avatar" id="avatar-preview">&#128100;</div>
+                        <label class="avatar-edit-btn" for="avatar-input" title="เปลี่ยนรูปโปรไฟล์">&#9998;</label>
+                        <input type="file" id="avatar-input" accept="image/*" onchange="uploadAvatar(this)"/>
+                    </div>
+                    <div class="profile-name-block">
+                        <div class="profile-display-name" id="display-name">กำลังโหลด...</div>
+                        <div class="profile-username-text" id="display-username">@</div>
+                        <span class="profile-role-badge" id="display-role"></span>
+                    </div>
+                </div>
+
+                <div class="tab-bar">
+                    <button class="tab-btn active" id="tab-info-btn"     onclick="switchTab('info')">ข้อมูลส่วนตัว</button>
+                    <button class="tab-btn"        id="tab-security-btn" onclick="switchTab('security')">ความปลอดภัย</button>
+                    <button class="tab-btn"        id="tab-history-btn"  onclick="switchTab('history')">ประวัติการ Upload</button>
+                </div>
+
+                <!-- Tab: ข้อมูลส่วนตัว -->
+                <div class="tab-panel active" id="tab-info">
+                    <div class="info-grid">
+                        <div class="info-field">
+                            <label>Username</label>
+                            <input class="info-input" id="info-username" type="text" readonly/>
+                        </div>
+                        <div class="info-field">
+                            <label>ตำแหน่ง (Role)</label>
+                            <input class="info-input" id="info-role" type="text" readonly/>
+                        </div>
+                        <div class="info-field">
+                            <label>ชื่อ (Firstname)</label>
+                            <input class="info-input" id="edit-firstname" type="text"/>
+                        </div>
+                        <div class="info-field">
+                            <label>นามสกุล (Lastname)</label>
+                            <input class="info-input" id="edit-lastname" type="text"/>
+                        </div>
+                        <div class="info-field full">
+                            <label>Email</label>
+                            <input class="info-input" id="edit-email" type="email"/>
+                        </div>
+                    </div>
+                    <div class="msg" id="msg-info"></div>
+                    <div class="action-row">
+                        <button class="btn primary" onclick="saveInfo()">บันทึกข้อมูล</button>
+                    </div>
+                </div>
+
+                <!-- Tab: ความปลอดภัย -->
+                <div class="tab-panel" id="tab-security">
+                    <div class="info-grid">
+                        <div class="info-field">
+                            <label>รหัสผ่านปัจจุบัน *</label>
+                            <div class="pw-wrap">
+                                <input class="info-input" id="sec-old" type="password" placeholder="กรอกรหัสผ่านปัจจุบัน"/>
+                                <button class="pw-eye" onclick="toggleEye('sec-old')">&#128065;</button>
+                            </div>
+                        </div>
+                        <div class="info-field"></div>
+                        <div class="info-field">
+                            <label>รหัสผ่านใหม่ *</label>
+                            <div class="pw-wrap">
+                                <input class="info-input" id="sec-new" type="password" placeholder="กรอกรหัสผ่านใหม่"/>
+                                <button class="pw-eye" onclick="toggleEye('sec-new')">&#128065;</button>
+                            </div>
+                        </div>
+                        <div class="info-field">
+                            <label>ยืนยันรหัสผ่านใหม่ *</label>
+                            <div class="pw-wrap">
+                                <input class="info-input" id="sec-confirm" type="password" placeholder="ยืนยันรหัสผ่านใหม่"/>
+                                <button class="pw-eye" onclick="toggleEye('sec-confirm')">&#128065;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg" id="msg-security"></div>
+                    <div class="action-row">
+                        <button class="btn primary" onclick="changePassword()">เปลี่ยนรหัสผ่าน</button>
+                    </div>
+                </div>
+
+                <!-- Tab: ประวัติ Upload -->
+                <div class="tab-panel" id="tab-history">
+                    <div id="history-area"><div class="no-data">กำลังโหลด...</div></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/js_profile.js"></script>
+    </body>
+</html>

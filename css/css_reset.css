@@ -1,0 +1,205 @@
+/* =============================================
+   css_reset.css  —  หน้ารีเซ็ตรหัสผ่าน
+   ============================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy:       #1a2c52;
+    --navy-mid:   #243a6e;
+    --gold:       #c9a84c;
+    --gold-light: #e8c96e;
+    --white:      #ffffff;
+    --off-white:  #f5f6fa;
+    --text:       #1e2a3a;
+    --muted:      #6b7a94;
+    --border:     #dde2ed;
+    --danger:     #c0392b;
+    --success:    #1e7e4a;
+    --radius:     8px;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--navy);
+    background-image: repeating-linear-gradient(
+        -55deg, transparent, transparent 38px,
+        rgba(201,168,76,.07) 38px, rgba(201,168,76,.07) 40px
+        );
+    padding: 24px 16px;
+}
+
+/* ── CARD ─────────────────────────────────── */
+.card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 40px 40px 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 24px 60px rgba(10,18,40,.35);
+    position: relative;
+}
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    border-radius: 14px 14px 0 0;
+}
+
+.card h1 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: .85rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* ── MSG ─────────────────────────────────── */
+.msg {
+    font-size: .85rem;
+    font-weight: 500;
+    min-height: 20px;
+    margin-bottom: 14px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0;
+    transition: padding .15s;
+}
+.msg:not(:empty) {
+    padding: 9px 14px;
+}
+.msg.error   {
+    background: #fdf0ef;
+    color: var(--danger);
+    border: 1px solid #f5c6c4;
+}
+.msg.success {
+    background: #edf7f1;
+    color: var(--success);
+    border: 1px solid #b8e0c8;
+}
+
+/* ── FORM ROW ────────────────────────────── */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 22px;
+}
+.form-row label {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.form-row input {
+    font-family: 'Sarabun', sans-serif;
+    font-size: .95rem;
+    color: var(--text);
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color .16s, box-shadow .16s, background .16s;
+}
+.form-row input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(26,44,82,.10);
+    background: var(--white);
+}
+.form-row input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+/* ── SEND BUTTON ─────────────────────────── */
+.btn-center {
+    margin-bottom: 20px;
+}
+.btn {
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    width: 100%;
+    padding: 13px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    letter-spacing: .04em;
+    transition: background .18s, transform .12s, box-shadow .18s;
+    box-shadow: 0 3px 12px rgba(26,44,82,.25);
+}
+.btn:hover {
+    background: var(--navy-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,44,82,.30);
+}
+.btn:active {
+    transform: translateY(0);
+}
+.btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── BACK LINK ───────────────────────────── */
+.back {
+    text-align: center;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+.back a {
+    font-size: .85rem;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color .15s;
+}
+.back a:hover {
+    color: var(--navy);
+}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 460px) {
+    .card {
+        padding: 30px 20px 26px;
+    }
+    .card h1 {
+        font-size: 1.25rem;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn, .form-row input, .back a {
+        transition: none;
+    }
+    .btn:hover {
+        transform: none;
+    }
+}

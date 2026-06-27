@@ -1,0 +1,338 @@
+/* =============================================
+   css_register.css  —  หน้าสมัครสมาชิก
+   ============================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy:       #1a2c52;
+    --navy-mid:   #243a6e;
+    --gold:       #c9a84c;
+    --gold-light: #e8c96e;
+    --white:      #ffffff;
+    --off-white:  #f5f6fa;
+    --text:       #1e2a3a;
+    --muted:      #6b7a94;
+    --border:     #dde2ed;
+    --accent-bg:  #eef1f8;
+    --danger:     #c0392b;
+    --success:    #1e7e4a;
+    --radius:     8px;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--navy);
+    background-image:
+        repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 38px,
+        rgba(201,168,76,.07) 38px,
+        rgba(201,168,76,.07) 40px
+        );
+    padding: 32px 16px;
+}
+
+/* ── CARD ─────────────────────────────────── */
+.card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 40px 40px 32px;
+    width: 100%;
+    box-shadow: 0 24px 60px rgba(10,18,40,.35);
+    position: relative;
+}
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    border-radius: 14px 14px 0 0;
+}
+
+#step-select {
+    max-width: 680px;
+}
+#step-form   {
+    max-width: 680px;
+    display: none;
+}
+
+.card h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: .9rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+}
+
+/* ── MSG ─────────────────────────────────── */
+.msg {
+    font-size: .85rem;
+    font-weight: 500;
+    min-height: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0;
+    transition: padding .15s;
+}
+.msg:not(:empty) {
+    padding: 9px 14px;
+}
+.msg.error   {
+    background: #fdf0ef;
+    color: var(--danger);
+    border: 1px solid #f5c6c4;
+}
+.msg.success {
+    background: #edf7f1;
+    color: var(--success);
+    border: 1px solid #b8e0c8;
+}
+
+/* ══ STEP 1 — ROLE SELECTION ══════════════ */
+.role-grid {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.role-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 20px 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .18s, background .18s, transform .14s, box-shadow .18s;
+    width: 170px;
+    background: var(--white);
+}
+.role-card:hover {
+    border-color: var(--navy);
+    background: var(--accent-bg);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,44,82,.14);
+}
+.role-card.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,.06);
+    box-shadow: 0 0 0 3px rgba(201,168,76,.25);
+}
+
+.role-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+.role-icon svg {
+    max-height: 100px;
+    width: auto;
+}
+
+.role-label {
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: .02em;
+}
+.role-card.selected .role-label {
+    color: var(--navy);
+}
+
+/* ══ STEP 2 — FORM ════════════════════════ */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
+    margin-bottom: 24px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.field.full-row {
+    grid-column: 1 / -1;
+}
+
+.field label {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.field input {
+    font-family: 'Sarabun', sans-serif;
+    font-size: .92rem;
+    color: var(--text);
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color .16s, box-shadow .16s, background .16s;
+}
+.field input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(26,44,82,.10);
+    background: var(--white);
+}
+.field input[readonly] {
+    background: var(--accent-bg);
+    color: var(--navy);
+    font-weight: 600;
+    cursor: default;
+}
+.field input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+/* ── PASSWORD WRAP ───────────────────────── */
+.pw-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.pw-wrap input {
+    width: 100%;
+    padding-right: 44px;
+}
+
+.toggle-eye {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 4px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color .14s;
+}
+.toggle-eye:hover {
+    color: var(--navy);
+}
+
+/* ── BUTTONS ─────────────────────────────── */
+.btn-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.btn {
+    font-family: 'Sarabun', sans-serif;
+    font-size: .92rem;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+.btn:hover {
+    background: var(--off-white);
+}
+
+.btn.primary {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+    font-weight: 700;
+    box-shadow: 0 3px 12px rgba(26,44,82,.22);
+    transition: background .18s, transform .12s, box-shadow .18s;
+}
+.btn.primary:hover {
+    background: var(--navy-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,44,82,.28);
+}
+.btn.primary:active {
+    transform: translateY(0);
+}
+.btn.primary:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── BACK LINK ───────────────────────────── */
+.back-link {
+    text-align: center;
+    margin-top: 18px;
+}
+.back-link a {
+    font-size: .85rem;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color .15s;
+}
+.back-link a:hover {
+    color: var(--navy);
+}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 600px) {
+    .card {
+        padding: 28px 18px 24px;
+    }
+    .role-grid {
+        gap: 10px;
+    }
+    .role-card {
+        width: 140px;
+        padding: 18px 14px 16px;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .field.full-row {
+        grid-column: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .role-card, .btn, .btn.primary, .toggle-eye {
+        transition: none;
+    }
+    .btn.primary:hover {
+        transform: none;
+    }
+}

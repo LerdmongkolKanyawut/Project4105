@@ -1,0 +1,365 @@
+/* =============================================
+   css_courses.css  —  หน้ารายละเอียดวิชา
+   classes ตรงกับ js_courses.js render จริง
+   ============================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy:       #1a2c52;
+    --navy-mid:   #243a6e;
+    --gold:       #c9a84c;
+    --gold-light: #e8c96e;
+    --white:      #ffffff;
+    --off-white:  #f5f6fa;
+    --text:       #1e2a3a;
+    --muted:      #6b7a94;
+    --border:     #dde2ed;
+    --accent-bg:  #eef1f8;
+    --radius:     8px;
+    --shadow-sm:  0 2px 8px rgba(26,44,82,.05);
+    --shadow-md:  0 4px 16px rgba(26,44,82,.13);
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ── TITLE BAR ── */
+.title-bar {
+    background: linear-gradient(100deg, var(--navy) 60%, var(--navy-mid) 100%);
+    color: var(--white);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 18px 32px;
+    position: relative;
+    overflow: hidden;
+}
+.title-bar::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(201,168,76,.18);
+    pointer-events: none;
+}
+
+/* ── NAV BAR ── */
+.nav-bar {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 24px;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(26,44,82,.06);
+}
+.nav-btn {
+    font-family: 'Sarabun', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--navy);
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: background .18s, color .18s, border-color .18s;
+}
+.nav-btn:hover {
+    background: var(--off-white);
+    border-color: var(--border);
+}
+.nav-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+}
+.nav-btn.profile-btn {
+    border-color: var(--gold);
+    color: var(--navy);
+}
+.nav-btn.profile-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+}
+.nav-welcome {
+    margin-left: auto;
+    font-size: .85rem;
+    color: var(--muted);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   ACCORDION WRAPPER
+   JS renders inside #accordion
+══════════════════════════════════════════ */
+#accordion {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 32px auto;
+    padding: 0 24px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ── LOADING / ERROR / NO-DATA ── */
+.loading-msg, .error-msg, .no-data {
+    text-align: center;
+    color: var(--muted);
+    font-size: .95rem;
+    padding: 52px 0;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+}
+.loading-msg::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: spin .8s linear infinite;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ══════════════════════════════════════════
+   COURSE ROW  (.course-row)
+   JS: '<div class="course-row">'
+══════════════════════════════════════════ */
+.course-row {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .18s, border-color .18s;
+}
+.course-row:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* ── COURSE HEADER  (.course-header) ── */
+.course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--white);
+    transition: background .15s;
+}
+.course-header:hover {
+    background: var(--off-white);
+}
+.course-header.open  {
+    background: var(--accent-bg);
+    border-bottom: 1.5px solid var(--border);
+}
+
+/* course code + name span */
+.course-code-name {
+    font-size: .97rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* arrow indicator */
+.arrow {
+    font-size: .9rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: color .18s;
+    line-height: 1;
+}
+.course-header.open .arrow {
+    color: var(--navy);
+}
+
+/* ── COURSE DETAIL  (.course-detail) ── */
+.course-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .30s ease;
+}
+.course-detail.open {
+    max-height: 800px;
+}
+
+/* inner padding wrapper */
+.detail-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 20px 22px 16px;
+}
+
+/* ── INFO TABLE  (.info-table) ── */
+.info-table {
+    border-collapse: collapse;
+    font-size: .9rem;
+    line-height: 1.7;
+    width: 100%;
+}
+.info-table td {
+    padding: 5px 0;
+    vertical-align: top;
+}
+.info-table td:first-child {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    padding-right: 24px;
+    width: 130px;
+}
+.info-table td:last-child {
+    color: var(--text);
+}
+
+/* ── LINK BUTTONS  (.link-btns / .link-btn) ── */
+.link-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 160px;
+    max-width: 220px;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: .82rem;
+    font-weight: 500;
+    transition: background .15s, transform .12s;
+    box-shadow: 0 2px 8px rgba(26,44,82,.18);
+}
+.link-btn:hover {
+    background: var(--navy-mid);
+    transform: translateX(2px);
+}
+.link-check {
+    font-size: .8rem;
+    color: var(--gold-light);
+    flex-shrink: 0;
+}
+
+/* ── COURSE DESC BLOCK  (.course-desc-block) ── */
+.course-desc-block {
+    padding: 0 22px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+/* push above border */
+.detail-inner + .course-desc-block {
+    margin-top: 0;
+}
+
+.course-desc-label {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 14px;
+}
+.course-desc-text {
+    font-size: .9rem;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--off-white);
+    border-radius: 6px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    white-space: pre-wrap;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 660px) {
+    .title-bar {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+    .nav-bar {
+        padding: 8px 12px;
+    }
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: .82rem;
+    }
+    #accordion {
+        padding: 0 12px 40px;
+        margin-top: 20px;
+    }
+    .detail-inner {
+        grid-template-columns: 1fr;
+    }
+    .link-btns {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    .link-btn {
+        flex: 1;
+        min-width: 130px;
+    }
+    .info-table td:first-child {
+        width: 110px;
+        padding-right: 12px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .course-detail, .course-header, .course-row,
+    .link-btn, .arrow, .nav-btn {
+        transition: none;
+    }
+    .loading-msg::before {
+        animation: none;
+    }
+}

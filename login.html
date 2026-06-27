@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>เข้าสู่ระบบ</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_login.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="card">
+            <h1>เข้าสู่ระบบ</h1>
+
+            <!-- message area — JS จัดการ -->
+            <div class="msg" id="msg"></div>
+
+            <div class="form-row">
+                <label for="username">Username</label>
+                <input type="text" id="username" autocomplete="username"/>
+            </div>
+
+            <div class="form-row">
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                    <input type="password" id="password" autocomplete="current-password"/>
+                    <button type="button" class="toggle-eye"
+                            onclick="togglePwd()">&#128065;</button>
+                </div>
+            </div>
+
+            <div class="btn-center">
+                <button class="btn-login" id="btn-login" onclick="doLogin()">Login</button>
+            </div>
+
+            <hr class="divider">
+
+            <div class="bottom-row">
+                <div class="bottom-col">
+                    <span>สมัครสมาชิก?</span>
+                    <button class="btn-register"
+                            onclick="location.href = 'register.html'">สมัครสมาชิก</button>
+                </div>
+                <div class="bottom-col">
+                    <span>ลืมรหัสผ่าน?</span>
+                    <button class="link-reset"
+                            onclick="location.href = 'reset.html'">รีเซ็ตรหัสผ่าน</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/js_login.js"></script>
+    </body>
+</html>

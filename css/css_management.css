@@ -1,0 +1,290 @@
+/* =============================================
+   css_management.css  —  หน้าจัดการระบบ
+   ============================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy:       #1a2c52;
+    --navy-mid:   #243a6e;
+    --gold:       #c9a84c;
+    --gold-light: #e8c96e;
+    --white:      #ffffff;
+    --off-white:  #f5f6fa;
+    --text:       #1e2a3a;
+    --muted:      #6b7a94;
+    --border:     #dde2ed;
+    --accent-bg:  #eef1f8;
+    --danger:     #c0392b;
+    --radius:     8px;
+    --shadow-sm:  0 2px 8px rgba(26,44,82,.06);
+    --shadow-md:  0 4px 20px rgba(26,44,82,.12);
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* TITLE BAR */
+.title-bar {
+    background: linear-gradient(100deg, var(--navy) 60%, var(--navy-mid) 100%);
+    color: var(--white);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 18px 32px;
+    position: relative;
+    overflow: hidden;
+}
+.title-bar::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(201,168,76,.18);
+    pointer-events: none;
+}
+
+/* NAV BAR */
+.nav-bar {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 24px;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+.nav-btn {
+    font-family: 'Sarabun', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--navy);
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: background .18s, color .18s, border-color .18s;
+}
+.nav-btn:hover {
+    background: var(--off-white);
+    border-color: var(--border);
+}
+.nav-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+}
+.nav-btn.profile-btn {
+    border-color: var(--gold);
+    color: var(--navy);
+}
+.nav-btn.profile-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+}
+.nav-welcome {
+    margin-left: auto;
+    font-size: .85rem;
+    color: var(--muted);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* ── ACCESS DENIED ───────────────────────── */
+.access-denied {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    gap: 12px;
+}
+.access-denied .icon {
+    font-size: 3.5rem;
+    margin-bottom: 4px;
+    opacity: .6;
+}
+.access-denied h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+.access-denied p {
+    font-size: .95rem;
+    color: var(--muted);
+}
+
+/* ══════════════════════════════════════════
+   MANAGEMENT CONTENT
+══════════════════════════════════════════ */
+.mgmt-content {
+    flex: 1;
+    max-width: 900px;
+    width: 100%;
+    margin: 32px auto;
+    padding: 0 24px 60px;
+}
+
+/* ── HEADER STRIP ────────────────────────── */
+.mgmt-header {
+    font-size: .92rem;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 12px 18px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: var(--shadow-sm);
+}
+.mgmt-header span {
+    color: var(--text);
+}
+
+/* ── BADGE ───────────────────────────────── */
+.badge {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+.badge-admin {
+    background: rgba(201,168,76,.18);
+    color: #7a5c0a;
+    border: 1px solid rgba(201,168,76,.4);
+}
+
+/* ── MENU GRID ───────────────────────────── */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+/* ── MENU CARD ───────────────────────────── */
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px 22px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .18s, box-shadow .18s, transform .14s;
+    box-shadow: var(--shadow-sm);
+}
+.menu-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .22s ease;
+}
+.menu-card:hover {
+    border-color: var(--navy);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+.menu-card:hover::after {
+    transform: scaleX(1);
+}
+
+.card-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+}
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+.card-desc {
+    font-size: .85rem;
+    color: var(--muted);
+    line-height: 1.65;
+    flex: 1;
+}
+.card-arrow {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-top: 4px;
+    letter-spacing: .02em;
+    transition: letter-spacing .18s;
+}
+.menu-card:hover .card-arrow {
+    letter-spacing: .06em;
+}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 720px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+    .mgmt-content {
+        padding: 0 12px 40px;
+    }
+}
+@media (max-width: 500px) {
+    .title-bar {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+    .nav-bar {
+        padding: 8px 12px;
+    }
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: .82rem;
+    }
+    .menu-card {
+        padding: 22px 18px 18px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .nav-btn, .menu-card, .menu-card::after, .card-arrow {
+        transition: none;
+    }
+    .menu-card:hover {
+        transform: none;
+    }
+}

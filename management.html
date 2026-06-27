@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>จัดการระบบ</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_management.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="title-bar">จัดการระบบ</div>
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn active" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <div class="access-denied" id="access-denied" style="display:none">
+                <div class="icon">&#128274;</div>
+                <h2>ไม่มีสิทธิ์เข้าถึง</h2>
+                <p>หน้านี้สำหรับผู้ดูแลระบบ (Admin) เท่านั้น</p>
+            </div>
+
+            <div class="mgmt-content" id="mgmt-content" style="display:none">
+                <div class="mgmt-header">
+                    ยินดีต้อนรับ, <span id="admin-name"></span>
+                    &nbsp;|&nbsp; ระดับ: <span class="badge badge-admin">Admin</span>
+                </div>
+
+                <div class="menu-grid">
+                    <a class="menu-card" href="admin/user_management.html">
+                        <div class="card-icon">&#128101;</div>
+                        <div class="card-title">จัดการผู้ใช้</div>
+                        <div class="card-desc">ดูรายชื่อผู้ใช้ทั้งหมด ตรวจสอบบทบาท และจัดการบัญชีในระบบ</div>
+                        <div class="card-arrow">เปิดหน้า &#8594;</div>
+                    </a>
+                    <a class="menu-card" href="admin/report_list.html">
+                        <div class="card-icon">&#128027;</div>
+                        <div class="card-title">ดูรายงานปัญหา</div>
+                        <div class="card-desc">ตรวจสอบปัญหาที่ผู้ใช้แจ้งเข้ามา พร้อมรายละเอียดและสถานะ</div>
+                        <div class="card-arrow">เปิดหน้า &#8594;</div>
+                    </a>
+                    <a class="menu-card" href="admin/courses_edit.html">
+                        <div class="card-icon">&#128218;</div>
+                        <div class="card-title">แก้ไขรายวิชา</div>
+                        <div class="card-desc">เพิ่ม แก้ไข และลบข้อมูลรายวิชา พร้อมตารางเรียนและลิงก์ที่เกี่ยวข้อง</div>
+                        <div class="card-arrow">เปิดหน้า &#8594;</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/js_management.js"></script>
+    </body>
+</html>

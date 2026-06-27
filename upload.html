@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Upload</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_upload.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="title-bar">Upload</div>
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn active" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <!-- เนื้อหาสลับตาม login state -->
+            <div id="area-guest" style="display:none">
+                <div class="login-notice">
+                    กรุณา <a onclick="location.href = 'login.html'">เข้าสู่ระบบ</a> ก่อนทำการ Upload ไฟล์
+                </div>
+            </div>
+
+            <div id="area-upload" style="display:none">
+                <div class="msg" id="server-msg"></div>
+
+                <!-- form ส่ง multipart ไป UploadServlet -->
+                <form method="post" action="UploadServlet"
+                      enctype="multipart/form-data" id="uploadForm">
+                    <div class="upload-form">
+                        <div class="top-grid">
+                            <!-- LEFT -->
+                            <div class="form-col">
+                                <div class="field-row">
+                                    <label>ผู้เขียน</label>
+                                    <!-- JS จะใส่ค่า firstname จาก sessionStorage -->
+                                    <input type="text" id="f-author" readonly/>
+                                </div>
+                                <div class="field-row">
+                                    <label>วิชา <span class="req">*</span></label>
+                                    <input type="text" name="subject" id="f-subject" placeholder="เช่น COS1103"/>
+                                </div>
+                                <div class="desc-label-only"><label>คำอธิบาย</label></div>
+                            </div>
+                            <!-- RIGHT -->
+                            <div class="form-col">
+                                <div class="field-row">
+                                    <label>วันที่ Upload</label>
+                                    <!-- JS จะใส่วันที่ปัจจุบัน -->
+                                    <input type="text" id="f-date" readonly/>
+                                </div>
+                                <div class="field-row">
+                                    <label>หัวข้อ <span class="req">*</span></label>
+                                    <input type="text" name="title" id="f-title" placeholder="ชื่อหัวข้อ"/>
+                                </div>
+                                <div class="file-pick-row">
+                                    <span class="fp-lbl">ไฟล์ <span class="req">*</span></span>
+                                    <div class="fp-controls">
+                                        <label class="file-pick-btn" for="file-input">&#128206; กรุณาเลือกไฟล์</label>
+                                        <input type="file" id="file-input" name="files"
+                                               multiple accept=".pdf,.docx,.doc,.pptx,.ppt,.xlsx,.xls,.txt,.zip,.rar"
+                                               onchange="addFiles(this)"/>
+                                        <span class="file-count-badge" id="file-count-badge">ยังไม่ได้เลือกไฟล์</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- UPLOAD BTN -->
+                            <div class="upload-btn-col">
+                                <button type="button" class="btn-upload" onclick="doUpload()">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="bottom-grid">
+                            <div class="panel-wrap">
+                                <textarea class="textarea-box" name="description"
+                                          id="f-desc" placeholder="กรอกคำอธิบาย..."></textarea>
+                            </div>
+                            <div class="panel-wrap">
+                                <div class="panel-label">รายการไฟล์ที่เลือก
+                                    (<span id="fc-count">0</span> ไฟล์)</div>
+                                <div class="file-cards-panel" id="file-cards-panel">
+                                    <div class="file-empty" id="file-empty-msg">ยังไม่มีไฟล์ที่เลือก</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="msg" id="upload-msg"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/js_upload.js"></script>
+    </body>
+</html>

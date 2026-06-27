@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>หน้าหลัก</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_index.css">
+        <link rel="stylesheet" href="css/css_responsive.css">
+    </head>
+    <body>
+        <div class="page-wrapper">
+
+            <div class="title-bar">หน้าหลัก</div>
+
+            <!-- ── Nav bar ── -->
+            <div class="nav-bar">
+                <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+                <div class="nav-links">
+                    <button class="nav-btn active" onclick="location.href = 'index.html'">หน้าหลัก</button>
+                    <button class="nav-btn" onclick="location.href = 'upload.html'">Upload</button>
+                    <button class="nav-btn" onclick="location.href = 'contact.html'">ติดต่อ</button>
+                    <button class="nav-btn" onclick="location.href = 'courses.html'">รายละเอียดวิชา</button>
+                    <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="location.href = 'management.html'">จัดการระบบ</button>
+                </div>
+                <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+                <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="location.href='profile.html'">โปรไฟล์</button>
+                <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+            </div>
+
+            <!-- ========== LIST VIEW ========== -->
+            <div id="view-list">
+                <div class="section-title">รายการไฟล์ทั้งหมด</div>
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>รายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody id="file-tbody">
+                        <!-- โหลดด้วย AJAX → GetEntriesServlet -->
+                        <tr class="loading-row"><td colspan="2">กำลังโหลด...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========== DETAIL VIEW ========== -->
+            <div id="view-detail">
+                <button class="back-btn" onclick="showList()">← กลับ</button>
+                <div class="detail-header" id="det-title"></div>
+                <div class="detail-body">
+                    <div class="detail-meta">
+                        <div class="meta-row">
+                            <span class="lbl">ผู้เขียน :</span>
+                            <span id="det-author"></span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="lbl">วันที่ :</span>
+                            <span id="det-date"></span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="lbl">วิชา :</span>
+                            <span id="det-subject"></span>
+                        </div>
+                        <div class="desc-block">
+                            <span class="lbl">คำอธิบาย</span>
+                            <div class="desc-text" id="det-desc"></div>
+                        </div>
+                    </div>
+                    <div class="detail-files">
+                        <div class="files-header">ไฟล์แนบ</div>
+                        <div class="files-list" id="det-files"></div>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div class="comments-section">
+                    <div class="comments-title">ความคิดเห็น</div>
+                    <div id="comments-list"></div>
+                    <div class="comment-form">
+                        <textarea id="comment-input"
+                                  placeholder="แสดงความคิดเห็น..."></textarea>
+                        <button class="btn-comment" onclick="submitComment()">ส่ง</button>
+                    </div>
+                    <div class="comment-guest-note" id="comment-guest-note">
+                        * กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /page-wrapper -->
+
+        <script src="js/js_index.js"></script>
+    </body>
+</html>

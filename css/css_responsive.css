@@ -1,0 +1,532 @@
+/* =============================================
+   css_responsive.css
+   โหลดหลัง CSS ของแต่ละหน้าเสมอ
+
+   Breakpoints
+   ───────────
+   860px  — tablet landscape (upload grid)
+   720px  — management menu grid
+   660px  — hamburger nav + page layouts
+   460px  — standalone cards (login, reset)
+   380px  — very small phones
+
+   การแก้ไข HTML ที่จำเป็น (ทุกหน้าที่มี nav-bar)
+   ──────────────────────────────────────────────
+   1) เพิ่ม <button class="hamburger" ...> เป็น child แรกของ .nav-bar
+   2) ห่อปุ่มนำทางหลักด้วย <div class="nav-links">
+
+   ตัวอย่าง:
+   <div class="nav-bar">
+     <button class="hamburger" onclick="this.closest('.nav-bar').classList.toggle('open')">&#9776;</button>
+     <div class="nav-links">
+       <button class="nav-btn active">หน้าหลัก</button>
+       <button class="nav-btn" onclick="...">Upload</button>
+       <button class="nav-btn" onclick="...">ติดต่อ</button>
+       <button class="nav-btn" onclick="...">รายละเอียดวิชา</button>
+       <button class="nav-btn" id="btn-mgmt" style="display:none" onclick="...">จัดการระบบ</button>
+     </div>
+     <span class="nav-welcome" id="nav-welcome">Welcome, Guest</span>
+     <button class="nav-btn profile-btn" id="btn-profile" style="display:none" onclick="...">โปรไฟล์</button>
+     <button class="nav-btn" id="btn-auth" onclick="handleAuth()">Login</button>
+   </div>
+   ============================================= */
+
+
+/* ══════════════════════════════════════════════
+   HAMBURGER BUTTON — hidden on desktop
+══════════════════════════════════════════════ */
+.hamburger {
+    display: none;
+}
+
+
+/* ══════════════════════════════════════════════
+   860px — tablet landscape
+══════════════════════════════════════════════ */
+@media (max-width: 860px) {
+
+    .top-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .upload-btn-col {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   720px — management menu
+══════════════════════════════════════════════ */
+@media (max-width: 720px) {
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+    .mgmt-content {
+        padding: 0 12px 40px;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   660px — hamburger nav + page layouts
+══════════════════════════════════════════════ */
+@media (max-width: 660px) {
+
+    /* ── title bar ── */
+    .title-bar {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+
+    /* ════════════════════════════
+       HAMBURGER NAV
+    ════════════════════════════ */
+
+    /* nav-bar: strip ให้เหลือแค่แถวเดียวสูง 52px */
+    .nav-bar {
+        position: relative;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 0 16px;
+        height: 52px;
+        gap: 8px;
+        overflow: visible;
+    }
+
+    /* hamburger button — แสดงมุมซ้าย */
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        line-height: 1;
+        color: #1a2c52;
+        background: transparent;
+        border: 1.5px solid #dde2ed;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background .15s, border-color .15s, color .15s;
+        order: 0;
+        z-index: 101;
+    }
+    .hamburger:hover {
+        background: #eef1f8;
+        border-color: #1a2c52;
+    }
+    /* เปลี่ยนไอคอนเมื่อเปิด */
+    .nav-bar.open .hamburger {
+        color: #c9a84c;
+        border-color: #c9a84c;
+        background: rgba(201,168,76,.08);
+    }
+
+    /* nav-links: ซ่อนในแนวนอน ย้ายไป dropdown */
+    .nav-links {
+        display: none;
+        order: 99;
+    }
+
+    /* welcome + auth ปุ่มย้ายไปมุมขวา (ยังโชว์ตลอด) */
+    .nav-welcome {
+        margin-left: auto;
+        font-size: .78rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+        order: 1;
+    }
+    /* btn-auth แสดงเสมอ — profile/btn-mgmt ให้ JS จัดการผ่าน inline style */
+    .nav-bar #btn-auth {
+        display: inline-flex !important;
+        padding: 5px 10px;
+        font-size: .8rem;
+        order: 2;
+    }
+    /* profile-btn แสดงเฉพาะเมื่อ JS set inline-block แล้ว (login แล้ว) */
+    .nav-bar #btn-profile[style*="inline"],
+    .nav-bar .nav-btn.profile-btn[style*="inline"] {
+        display: inline-flex !important;
+        padding: 5px 10px;
+        font-size: .8rem;
+        order: 2;
+    }
+
+    /* ── DROPDOWN PANEL เมื่อ .nav-bar.open ── */
+    .nav-bar.open {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 16px 14px;
+        background: #fff;
+        border-bottom: 2px solid #dde2ed;
+        box-shadow: 0 8px 28px rgba(26,44,82,.16);
+        z-index: 100;
+    }
+
+    /* แสดง .nav-links เป็น column เต็มความกว้าง */
+    .nav-bar.open .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #dde2ed;
+        order: 99;
+    }
+
+    /* ปุ่มใน dropdown — เต็มแถว
+       ใช้ :not([style*="none"]) เพื่อไม่ override display:none ที่ JS set
+       (btn-mgmt ซ่อนอยู่เมื่อ user ไม่ใช่ Admin) */
+    .nav-bar.open .nav-links .nav-btn:not([style*="none"]) {
+        display: flex !important;
+        width: 100%;
+        text-align: left;
+        padding: 10px 14px;
+        font-size: .95rem;
+        border: 1.5px solid #dde2ed;
+        border-radius: 7px;
+        justify-content: flex-start;
+    }
+    .nav-bar.open .nav-links .nav-btn.active {
+        background: #1a2c52;
+        color: #fff;
+        border-color: #1a2c52;
+    }
+
+    /* backdrop — คลิกนอกเพื่อปิด */
+    .nav-bar.open::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: rgba(10,18,38,.18);
+    }
+    /* hamburger อยู่เหนือ backdrop */
+    .hamburger {
+        z-index: 101;
+    }
+    .nav-bar.open .nav-links {
+        z-index: 101;
+        position: relative;
+    }
+
+    /* ── page layouts ── */
+    .section-title       {
+        padding: 20px 16px 10px;
+    }
+    #view-list           {
+        padding: 0 12px 40px;
+    }
+    #view-detail         {
+        padding: 16px 12px 40px;
+    }
+    .detail-body         {
+        grid-template-columns: 1fr;
+    }
+    .detail-header       {
+        font-size: 1.2rem;
+    }
+    .list-table          {
+        font-size: .85rem;
+    }
+    .list-table thead th,
+    .list-table tbody td {
+        padding: 10px 10px;
+    }
+
+    #accordion           {
+        padding: 0 12px 40px;
+        margin-top: 20px;
+    }
+    .detail-inner        {
+        grid-template-columns: 1fr;
+    }
+    .link-btns           {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    .link-btn            {
+        flex: 1;
+        min-width: 130px;
+    }
+    .info-table td:first-child {
+        width: 110px;
+        padding-right: 12px;
+    }
+
+    .contact-name        {
+        font-size: 1.8rem;
+    }
+    .modal-box           {
+        padding: 28px 20px 22px;
+    }
+
+    .profile-content     {
+        padding: 0 12px 40px;
+        margin-top: 20px;
+    }
+    .profile-top         {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 20px 20px 28px;
+    }
+    .tab-btn             {
+        padding: 11px 14px;
+        font-size: .82rem;
+    }
+    .info-grid           {
+        grid-template-columns: 1fr;
+    }
+    .info-field.full     {
+        grid-column: auto;
+    }
+
+    .content             {
+        padding: 0 12px 40px;
+        margin-top: 20px;
+    }
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px 10px;
+    }
+
+    .upload-form         {
+        padding: 16px 12px 32px;
+    }
+    .top-grid            {
+        grid-template-columns: 1fr;
+    }
+    .upload-btn-col      {
+        justify-content: stretch;
+    }
+    .btn-upload          {
+        width: 100%;
+    }
+    .bottom-grid         {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-card           {
+        padding: 22px 18px 18px;
+    }
+
+    .role-grid           {
+        gap: 10px;
+    }
+    .role-card           {
+        width: 140px;
+        padding: 18px 14px 16px;
+    }
+    .form-grid           {
+        grid-template-columns: 1fr;
+    }
+    .field.full-row      {
+        grid-column: auto;
+    }
+
+    .form-row2           {
+        grid-template-columns: 1fr;
+    }
+    .sched-header        {
+        display: none;
+    }
+    .sched-row           {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
+    .link-row            {
+        grid-template-columns: 1fr 28px;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   460px — standalone cards (login, reset)
+══════════════════════════════════════════════ */
+@media (max-width: 460px) {
+
+    .card {
+        padding: 28px 18px 24px;
+        margin: 12px;
+        border-radius: 12px;
+    }
+    .card h1 {
+        font-size: 1.25rem;
+    }
+
+    .bottom-row  {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .bottom-col  {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .role-card   {
+        width: 120px;
+        padding: 14px 10px 12px;
+    }
+    .role-icon   {
+        height: 72px;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   380px — very small phones
+══════════════════════════════════════════════ */
+@media (max-width: 380px) {
+
+    .bottom-row  {
+        gap: 8px;
+    }
+    .btn-register,
+    .link-reset  {
+        width: 100%;
+        text-align: center;
+    }
+
+    .role-grid   {
+        flex-direction: column;
+        align-items: center;
+    }
+    .role-card   {
+        width: 100%;
+        max-width: 280px;
+        flex-direction: row;
+        padding: 12px 16px;
+        gap: 16px;
+    }
+    .role-icon   {
+        height: 52px;
+    }
+
+    .course-header {
+        padding: 12px 14px;
+    }
+    .course-code-name {
+        font-size: .88rem;
+    }
+
+    .avatar      {
+        width: 68px;
+        height: 68px;
+        font-size: 2rem;
+    }
+    .profile-display-name {
+        font-size: 1.1rem;
+    }
+
+    .data-table .col-hide-xs {
+        display: none;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   Accessibility — reduced motion
+══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+    .nav-btn, .back-btn, .hamburger,
+    .btn, .btn.primary, .btn.success, .btn.danger,
+    .btn-login, .btn-report, .btn-upload,
+    .btn-register, .link-reset, .btn-comment,
+    .tab-btn, .toggle-eye, .pw-eye,
+    .avatar-edit-btn, .file-pick-btn,
+    .file-card-remove, .dyn-add, .dyn-remove,
+    .menu-card, .menu-card::after, .card-arrow,
+    .history-item, .role-card,
+    .link-btn, .back a               {
+        transition: none !important;
+    }
+
+    .btn.primary:hover, .btn-login:hover,
+    .btn-upload:hover, .btn-report:hover,
+    .menu-card:hover, .link-btn:hover {
+        transform: none !important;
+    }
+
+    .form-row input, .field input, .info-input,
+    .textarea-box, #comment-input    {
+        transition: none !important;
+    }
+
+    .course-detail, .course-header,
+    .course-row, .arrow              {
+        transition: none !important;
+    }
+
+    .modal-box                       {
+        animation: none !important;
+    }
+    .modal-overlay, .modal-box,
+    .toast                           {
+        transition: none !important;
+    }
+
+    .loading-msg::before             {
+        animation: none !important;
+    }
+}
+
+
+/* ══════════════════════════════════════════════
+   Print
+══════════════════════════════════════════════ */
+@media print {
+
+    .title-bar, .nav-bar, .hamburger,
+    .btn, .btn-report, .btn-upload, .btn-login,
+    .back-btn, .btn-comment, .tab-bar,
+    .comment-form, .comment-guest-note,
+    .toolbar, .action-cell, .modal-overlay,
+    .toast, .avatar-edit-btn          {
+        display: none !important;
+    }
+
+    body           {
+        background: #fff;
+        color: #000;
+        font-size: 11pt;
+    }
+    .page-wrapper  {
+        min-height: auto;
+    }
+    .detail-body   {
+        grid-template-columns: 1fr;
+    }
+    #view-list     {
+        display: none;
+    }
+    #view-detail   {
+        display: block !important;
+        padding: 0;
+    }
+
+    .course-detail {
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .link-btn::after {
+        content: ' (' attr(href) ')';
+        font-size: .8em;
+        color: #555;
+    }
+
+    .data-table {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
